@@ -25,8 +25,7 @@ before_script:
 - mkdir -p ~/.grails; wget -q -O ~/.grails/settings.groovy https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/$GRAILS_SETTINGS_FILE
 - MAVEN_REPO="ala-repo-snapshot"
 - MAVEN_REPO_URL="http://ala-wonder.it.csiro.au/nexus/content/repositories/snapshots/"
-- grep '^\s*app\.version=' ./application.properties | grep -q "\-SNAPSHOT"; if [ "$?"
-  = "1" ]; then MAVEN_REPO="ala-repo-release"; MAVEN_REPO_URL="http://ala-wonder.it.csiro.au/nexus/content/repositories/releases/" fi;
+- grep '^\s*app\.version=' ./application.properties | grep -q "\-SNAPSHOT"; if [ "$?" = "1" ]; then MAVEN_REPO="ala-repo-release"; MAVEN_REPO_URL="http://ala-wonder.it.csiro.au/nexus/content/repositories/releases/" fi;
 - echo "MAVEN_REPO:$MAVEN_REPO"
 - echo "MAVEN_REPO_URL:$MAVEN_REPO_URL"
 
