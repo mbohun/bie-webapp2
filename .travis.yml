@@ -23,6 +23,7 @@ before_script:
   fi;
 - echo "GRAILS_SETTINGS_FILE:$GRAILS_SETTINGS_FILE"
 - mkdir -p ~/.grails; wget -q -O ~/.grails/settings.groovy https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/$GRAILS_SETTINGS_FILE
+- mkdir -p ~/.m2; wget -q -O ~/.m2/settings.xml https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_maven_settings.xml
 - MAVEN_REPO="ala-repo-snapshot"
 - MAVEN_REPO_URL="http://ala-wonder.it.csiro.au/nexus/content/repositories/snapshots/"
 - grep '^\s*app\.version=' ./application.properties | grep -q "\-SNAPSHOT"; if [ "$?" = "1" ]; then MAVEN_REPO="ala-repo-release"; MAVEN_REPO_URL="http://ala-wonder.it.csiro.au/nexus/content/repositories/releases/"; fi;
