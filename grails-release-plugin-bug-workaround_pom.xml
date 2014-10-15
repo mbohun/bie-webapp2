@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd'>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>au.org.ala</groupId>
+  <artifactId>bie-webapp2</artifactId>
+  <packaging>war</packaging>
+  <version>SET_VERSION_STRING</version>
+  <name>bie-webapp2</name>
+</project>
+
+<!--
+
+BUG Explanation: 
+When grails release plugin was added to this project (bie-webapp2) in order to
+deploy into our maven repo from travis-ci.org; the two tasks:
+grails maven-install AND grails maven-deploy fail to generate a valid
+target/pom.xml file (the pom.xml is created but the closing </project> tag is
+missing - poiniting to a silent crash during the pom.xml creation/generation).
+
+This workaraound simply uses this file (a pre-generated pom.xml template), sets
+the version (according to application.properties) and then uses maven to deploy
+the war file into the remote ALA maven repository, this is the BASH script logic
+that travis-ci.org executes in the "after_success" section:
+
+# 1. copy this (template) file to pom.xml
+cp grails-release-plugin-bug-workaround_pom.xml pom.xml 
+
+# 2. extract version number from the application.properties
+APP_VERSION=`grep '^\s*app\.version=' ./application.properties | sed -e 's/^\s*app\.version=//g' | tr -d "\r"`
+
+# 3. use maven to set the app version in pom.xml
+mvn versions:set -DnewVersion=$APP_VERSION
+
+# 4. use maven to deploy the war into the remote maven repo
+mvn deploy:deploy-file \
+    -DpomFile=pom.xml \
+    -Dfile=target/bie-webapp2-0.2.war \
+    -DrepositoryId=$MAVEN_REPO \
+    -Durl=$MAVEN_REPO_URL
+
+-->
